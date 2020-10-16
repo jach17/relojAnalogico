@@ -9,6 +9,9 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import sun.java2d.loops.DrawLine;
 
@@ -18,9 +21,22 @@ import sun.java2d.loops.DrawLine;
  */
 public class RelojAnalogico extends JFrame {
 
+    boolean condicionSegundero = true;
+    JButton btnStop;
+
     public RelojAnalogico() {
         this.setBounds(0, 0, 500, 500);
         this.setLocationRelativeTo(null);
+        btnStop= new JButton("Stop");
+        btnStop.setBounds(10, 30, 30, 20);
+        btnStop.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                condicionSegundero=false;
+            }
+        });
+       this.setLayout(null);
+        this.add(btnStop);
     }
 
     public static void main(String[] args) {
@@ -42,7 +58,23 @@ public class RelojAnalogico extends JFrame {
         super.paint(grphcs); //To change body of generated methods, choose Tools | Templates.
         ciruclo(grphcs);
         fullMarcas(grphcs);
-        movimientoSegundero(grphcs);
+
+        Thread hiloMinuto = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                movimientoMinutero();
+            }
+        });
+        Thread hiloSegundo = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                movimientoSegundero();
+            }
+        });
+
+        hiloMinuto.start();
+        hiloSegundo.start();
+
     }
 
     public void ciruclo(Graphics g) {
@@ -112,17 +144,44 @@ public class RelojAnalogico extends JFrame {
 
     }
 
-    public void movimientoSegundero(final Graphics g) {
+    public void movimientoMinutero() {
+        Graphics g = this.getGraphics();
         for (int i = 0; i < 360; i += 6) {
 
             try {
-                dibujaSegundero(g, i, Color.BLACK);
-                Thread.sleep(100);
-                dibujaSegundero(g, i, Color.WHITE);
+                dibujaMinutero(g, i, Color.RED);
+                Thread.sleep(6000);
+                dibujaMinutero(g, i, Color.WHITE);
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
         }
+    }
+
+    public void movimientoSegundero() {
+        Graphics g = this.getGraphics();
+        while (condicionSegundero) {
+            for (int i = 0; i < 360; i += 6) {
+
+                try {
+                    dibujaSegundero(g, i, Color.BLACK);
+                    Thread.sleep(100);
+                    dibujaSegundero(g, i, Color.WHITE);
+                } catch (InterruptedException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+    }
+
+    public void dibujaMinutero(Graphics g, int angulo, Color color) {
+        Point origen = new Point();
+        origen.x = 250;
+        origen.y = 250;
+        Point destino;
+        destino = getSegundoPunto(origen.x, origen.y, angulo, 70);
+        g.setColor(color);
+        g.drawLine(origen.x, origen.y, destino.x, destino.y);
     }
 
     public void dibujaSegundero(Graphics g, int angulo, Color color) {
