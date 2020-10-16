@@ -5,17 +5,43 @@
  */
 package relojanalogico;
 
+import java.awt.EventQueue;
+import java.awt.Graphics;
+import javax.swing.JFrame;
+
 /**
  *
  * @author Jach
  */
-public class RelojAnalogico {
+public class RelojAnalogico extends JFrame {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    
+    public RelojAnalogico(){
+        this.setBounds(0,0, 500, 500);
+        this.setLocationRelativeTo(null);
     }
+    
+    public static void main(String[] args) {
+       
+        EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                RelojAnalogico ra = new RelojAnalogico();
+                ra.setLocationRelativeTo(null);
+                ra.setVisible(true);
+                ra.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+            }
+        });
+    }
+
+    @Override
+    public void paint(Graphics grphcs) {
+        super.paint(grphcs); //To change body of generated methods, choose Tools | Templates.
+        
+    
+    }
+    
+    
     
 }
