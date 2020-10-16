@@ -49,17 +49,32 @@ public class RelojAnalogico extends JFrame {
         int x = this.getWidth() / 4;
         int y = this.getHeight() / 4;
         g.fillOval(x, y, 2 * x, 2 * y);
+        marcaSegundero(g, 90);
+
+    }
+
+    public void marcaSegundero(Graphics g, int angulo) {
+        Point origen = new Point();
+        origen.x = 250;
+        origen.y = 250;
+        Point destino;
+        destino = getSegundoPunto(origen.x, origen.y, angulo, 125);
+        g.setColor(Color.BLACK);
+        g.drawLine(origen.x, origen.y, destino.x, destino.y);
+        g.setColor(Color.WHITE);
+        destino = getSegundoPunto(origen.x, origen.y, angulo, 120);
+        g.drawLine(origen.x, origen.y, destino.x, destino.y);
 
     }
 
     public void movimientoSegundero(final Graphics g) {
         for (int i = 0; i < 360; i += 6) {
-            
-            try{
+
+            try {
                 dibujaSegundero(g, i, Color.BLACK);
                 Thread.sleep(100);
                 dibujaSegundero(g, i, Color.WHITE);
-            }catch(InterruptedException e){
+            } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -70,7 +85,7 @@ public class RelojAnalogico extends JFrame {
         origen.x = 250;
         origen.y = 250;
         Point destino;
-        destino = getSegundoPunto(origen.x, origen.y, angulo, 125);
+        destino = getSegundoPunto(origen.x, origen.y, angulo, 115);
         g.setColor(color);
         g.drawLine(origen.x, origen.y, destino.x, destino.y);
     }
