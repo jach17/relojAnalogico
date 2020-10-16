@@ -8,7 +8,9 @@ package relojanalogico;
 import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
+import java.awt.Point;
 import javax.swing.JFrame;
+import sun.java2d.loops.DrawLine;
 
 /**
  *
@@ -40,6 +42,7 @@ public class RelojAnalogico extends JFrame {
     public void paint(Graphics grphcs) {
         super.paint(grphcs); //To change body of generated methods, choose Tools | Templates.
         ciruclo(grphcs);
+        dibujaSegundero(grphcs);
     }
     
     public void ciruclo(Graphics g){
@@ -47,6 +50,25 @@ public class RelojAnalogico extends JFrame {
         int x= this.getWidth()/4;
         int y= this.getHeight()/4;
         g.fillOval(x,y,2*x,2*y);
+        
+    }
+    public void dibujaSegundero(Graphics g){
+        Point origen = new Point(this.getWidth()/2, this.getHeight()/2);
+        Point destino;
+        destino = getSegundoPunto(origen.x, origen.y, 45, 50);
+        g.setColor(Color.BLACK);
+        g.drawLine(origen.x, origen.y, destino.x, destino.y);
+    }
+    
+    
+    public Point getSegundoPunto(int x1, int y1,int angulo, int distancia){
+        Point p = new Point();
+        double x2=distancia*Math.cos(Double.parseDouble(String.valueOf(angulo)));
+        double y2 = distancia*Math.sin(Double.parseDouble(String.valueOf(angulo)));
+        p.x=(int)x2 +x1;
+        p.y=(int)y2 +y1;
+        return p;
+        
     }
     
     
