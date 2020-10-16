@@ -41,6 +41,7 @@ public class RelojAnalogico extends JFrame {
     public void paint(Graphics grphcs) {
         super.paint(grphcs); //To change body of generated methods, choose Tools | Templates.
         ciruclo(grphcs);
+        fullMarcaSegundero(grphcs);
         movimientoSegundero(grphcs);
     }
 
@@ -49,8 +50,15 @@ public class RelojAnalogico extends JFrame {
         int x = this.getWidth() / 4;
         int y = this.getHeight() / 4;
         g.fillOval(x, y, 2 * x, 2 * y);
-        marcaSegundero(g, 90);
 
+    }
+
+    public void fullMarcaSegundero(Graphics g) {
+        for (int i = 0; i < 360; i += 6) {
+            
+            marcaSegundero(g, i);
+
+        }
     }
 
     public void marcaSegundero(Graphics g, int angulo) {
@@ -59,10 +67,8 @@ public class RelojAnalogico extends JFrame {
         origen.y = 250;
         Point destino;
         destino = getSegundoPunto(origen.x, origen.y, angulo, 125);
+        origen= getSegundoPunto(origen.x, origen.y, angulo, 120);
         g.setColor(Color.BLACK);
-        g.drawLine(origen.x, origen.y, destino.x, destino.y);
-        g.setColor(Color.WHITE);
-        destino = getSegundoPunto(origen.x, origen.y, angulo, 120);
         g.drawLine(origen.x, origen.y, destino.x, destino.y);
 
     }
