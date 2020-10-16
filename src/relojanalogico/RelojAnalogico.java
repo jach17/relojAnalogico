@@ -27,15 +27,16 @@ public class RelojAnalogico extends JFrame {
     public RelojAnalogico() {
         this.setBounds(0, 0, 500, 500);
         this.setLocationRelativeTo(null);
-        btnStop= new JButton("Stop");
+        btnStop = new JButton("X");
         btnStop.setBounds(10, 30, 30, 20);
         btnStop.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                condicionSegundero=false;
+                condicionSegundero = false;
+
             }
         });
-       this.setLayout(null);
+        this.setLayout(null);
         this.add(btnStop);
     }
 
@@ -73,7 +74,13 @@ public class RelojAnalogico extends JFrame {
         });
 
         hiloMinuto.start();
-        hiloSegundo.start();
+        if (condicionSegundero) {
+
+            hiloSegundo.start();
+        } else {
+
+            hiloSegundo.interrupt();
+        }
 
     }
 
@@ -146,7 +153,13 @@ public class RelojAnalogico extends JFrame {
 
     public void movimientoMinutero() {
         Graphics g = this.getGraphics();
-        for (int i = 0; i < 360; i += 6) {
+
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
+        for (int i = -90; i < 270; i += 6) {
 
             try {
                 dibujaMinutero(g, i, Color.RED);
@@ -161,7 +174,7 @@ public class RelojAnalogico extends JFrame {
     public void movimientoSegundero() {
         Graphics g = this.getGraphics();
         while (condicionSegundero) {
-            for (int i = 0; i < 360; i += 6) {
+            for (int i = -90; i < 270; i += 6) {
 
                 try {
                     dibujaSegundero(g, i, Color.BLACK);
@@ -182,6 +195,7 @@ public class RelojAnalogico extends JFrame {
         destino = getSegundoPunto(origen.x, origen.y, angulo, 70);
         g.setColor(color);
         g.drawLine(origen.x, origen.y, destino.x, destino.y);
+
     }
 
     public void dibujaSegundero(Graphics g, int angulo, Color color) {
