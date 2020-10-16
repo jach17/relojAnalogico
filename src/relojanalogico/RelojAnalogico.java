@@ -53,9 +53,11 @@ public class RelojAnalogico extends JFrame {
         
     }
     public void dibujaSegundero(Graphics g){
-        Point origen = new Point(this.getWidth()/2, this.getHeight()/2);
+        Point origen = new Point();
+        origen.x=250;
+        origen.y=250;
         Point destino;
-        destino = getSegundoPunto(origen.x, origen.y, 45, 50);
+        destino = getSegundoPunto(origen.x, origen.y, 90, 125);
         g.setColor(Color.BLACK);
         g.drawLine(origen.x, origen.y, destino.x, destino.y);
     }
@@ -63,10 +65,18 @@ public class RelojAnalogico extends JFrame {
     
     public Point getSegundoPunto(int x1, int y1,int angulo, int distancia){
         Point p = new Point();
-        double x2=distancia*Math.cos(Double.parseDouble(String.valueOf(angulo)));
-        double y2 = distancia*Math.sin(Double.parseDouble(String.valueOf(angulo)));
-        p.x=(int)x2 +x1;
-        p.y=(int)y2 +y1;
+        
+        double anguloRadianes = (Math.PI*angulo)/180;
+        
+        double x2 = distancia*Math.cos(anguloRadianes);
+        
+        double y2 = distancia*Math.sin(anguloRadianes);
+        p.x=(int)Math.round(x2) +x1;
+        p.y=(int)Math.round(y2) +y1;
+        
+        
+        System.out.println("X2: "+ p.x);
+        System.out.println("Y2: "+ p.y);
         return p;
         
     }
