@@ -22,22 +22,10 @@ import sun.java2d.loops.DrawLine;
 public class RelojAnalogico extends JFrame {
 
     boolean condicionSegundero = true;
-    JButton btnStop;
 
     public RelojAnalogico() {
         this.setBounds(0, 0, 500, 500);
         this.setLocationRelativeTo(null);
-        btnStop = new JButton("X");
-        btnStop.setBounds(10, 30, 30, 20);
-        btnStop.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent ae) {
-                condicionSegundero = false;
-
-            }
-        });
-        this.setLayout(null);
-        this.add(btnStop);
     }
 
     public static void main(String[] args) {
@@ -72,15 +60,16 @@ public class RelojAnalogico extends JFrame {
                 movimientoSegundero();
             }
         });
+        Thread hiloHora = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                movimientoHora();
+            }
+        });
 
+        hiloHora.start();
         hiloMinuto.start();
-        if (condicionSegundero) {
-
-            hiloSegundo.start();
-        } else {
-
-            hiloSegundo.interrupt();
-        }
+        hiloSegundo.start();
 
     }
 
@@ -151,6 +140,26 @@ public class RelojAnalogico extends JFrame {
 
     }
 
+    public void movimientoHora() {
+        Graphics g = this.getGraphics();
+
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
+        }
+        for (int i = -90; i < 270; i += 6) {
+
+            try {
+                dibujaMinutero(g, i, Color.BLUE);
+                Thread.sleep(3600);
+                dibujaMinutero(g, i, Color.WHITE);
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
     public void movimientoMinutero() {
         Graphics g = this.getGraphics();
 
@@ -163,7 +172,7 @@ public class RelojAnalogico extends JFrame {
 
             try {
                 dibujaMinutero(g, i, Color.RED);
-                Thread.sleep(6000);
+                Thread.sleep(600);
                 dibujaMinutero(g, i, Color.WHITE);
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
@@ -185,6 +194,17 @@ public class RelojAnalogico extends JFrame {
                 }
             }
         }
+    }
+
+    public void dibujaHora(Graphics g, int angulo, Color color) {
+        Point origen = new Point();
+        origen.x = 250;
+        origen.y = 250;
+        Point destino;
+        destino = getSegundoPunto(origen.x, origen.y, angulo, 50);
+        g.setColor(color);
+        g.drawLine(origen.x, origen.y, destino.x, destino.y);
+
     }
 
     public void dibujaMinutero(Graphics g, int angulo, Color color) {
