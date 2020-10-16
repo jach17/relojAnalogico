@@ -5,6 +5,7 @@
  */
 package relojanalogico;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import javax.swing.JFrame;
@@ -38,10 +39,15 @@ public class RelojAnalogico extends JFrame {
     @Override
     public void paint(Graphics grphcs) {
         super.paint(grphcs); //To change body of generated methods, choose Tools | Templates.
-        
-    
+        ciruclo(grphcs);
     }
     
+    public void ciruclo(Graphics g){
+        g.setColor(Color.WHITE);
+        int x= this.getWidth()/4;
+        int y= this.getHeight()/4;
+        g.fillOval(x,y,2*x,2*y);
+    }
     
     
 }
