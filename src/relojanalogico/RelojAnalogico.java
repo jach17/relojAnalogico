@@ -47,28 +47,28 @@ public class RelojAnalogico extends JFrame {
         super.paint(grphcs); //To change body of generated methods, choose Tools | Templates.
         ciruclo(grphcs);
         fullMarcas(grphcs);
-
+/*
         Thread hiloMinuto = new Thread(new Runnable() {
             @Override
             public void run() {
                 movimientoMinutero();
             }
         });
-        Thread hiloSegundo = new Thread(new Runnable() {
+  */      Thread hiloSegundo = new Thread(new Runnable() {
             @Override
             public void run() {
                 movimientoSegundero();
             }
         });
-        Thread hiloHora = new Thread(new Runnable() {
+    /*    Thread hiloHora = new Thread(new Runnable() {
             @Override
             public void run() {
                 movimientoHora();
             }
         });
-
-        hiloHora.start();
-        hiloMinuto.start();
+*/
+      //  hiloHora.start();
+       // hiloMinuto.start();
         hiloSegundo.start();
 
     }
@@ -139,7 +139,7 @@ public class RelojAnalogico extends JFrame {
         g.drawLine(origen.x, origen.y, destino.x, destino.y);
 
     }
-
+/*
     public void movimientoHora() {
         Graphics g = this.getGraphics();
 
@@ -179,7 +179,7 @@ public class RelojAnalogico extends JFrame {
             }
         }
     }
-
+*/
     public void movimientoSegundero() {
         Graphics g = this.getGraphics();
         while (condicionSegundero) {
@@ -195,7 +195,7 @@ public class RelojAnalogico extends JFrame {
             }
         }
     }
-
+/*
     public void dibujaHora(Graphics g, int angulo, Color color) {
         Point origen = new Point();
         origen.x = 250;
@@ -217,7 +217,7 @@ public class RelojAnalogico extends JFrame {
         g.drawLine(origen.x, origen.y, destino.x, destino.y);
 
     }
-
+*/
     public void dibujaSegundero(Graphics g, int angulo, Color color) {
         Point origen = new Point();
         origen.x = 250;
