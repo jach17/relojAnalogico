@@ -134,7 +134,6 @@ public class RelojAnalogico extends JFrame {
             try {
                 Calendar s = Calendar.getInstance();
                 int seg = s.get(Calendar.SECOND);
-                System.out.println("Valor de seg: " + seg);
                 dibujaSegundero(g, (seg * 6) - 90, Color.RED);
                 Thread.sleep(1000);
                 dibujaSegundero(g, (seg * 6) - 90, Color.WHITE);
@@ -151,8 +150,7 @@ public class RelojAnalogico extends JFrame {
             try {
                 Calendar m = Calendar.getInstance();
                 int min = m.get(Calendar.MINUTE);
-                System.out.println("Valor de min: " + min);
-                dibujaMinutero(g, (min * 6) - 90, Color.RED);
+                dibujaMinutero(g, (min * 6) - 90, Color.BLACK);
                 Thread.sleep(1000);
                 dibujaMinutero(g, (min * 6) - 90, Color.WHITE);
             } catch (InterruptedException e) {
@@ -167,10 +165,9 @@ public class RelojAnalogico extends JFrame {
             try {
                 Calendar h = Calendar.getInstance();
                 int hour = h.get(Calendar.HOUR);
-                System.out.println("Valor de h: " + hour);
-                dibujaHora(g, (hour * 6) - 90, Color.BLUE);
+                dibujaHora(g, (hour * 6) +90, Color.BLACK);
                 Thread.sleep(1000);
-                dibujaHora(g, (hour * 6) - 90, Color.WHITE);
+                dibujaHora(g, (hour * 6) +90, Color.WHITE);
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
@@ -182,7 +179,7 @@ public class RelojAnalogico extends JFrame {
         origen.x = 250;
         origen.y = 250;
         Point destino;
-        destino = getSegundoPunto(origen.x, origen.y, angulo, 50);
+        destino = getSegundoPunto(origen.x, origen.y, angulo, 40);
         g.setColor(color);
         g.drawLine(origen.x, origen.y, destino.x, destino.y);
 
@@ -193,7 +190,7 @@ public class RelojAnalogico extends JFrame {
         origen.x = 250;
         origen.y = 250;
         Point destino;
-        destino = getSegundoPunto(origen.x, origen.y, angulo, 70);
+        destino = getSegundoPunto(origen.x, origen.y, angulo, 80);
         g.setColor(color);
         g.drawLine(origen.x, origen.y, destino.x, destino.y);
 
