@@ -9,7 +9,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.util.Calendar; 
+import java.util.Calendar;
 import javax.swing.JFrame;
 
 /**
@@ -44,28 +44,19 @@ public class RelojAnalogico extends JFrame {
         super.paint(grphcs); //To change body of generated methods, choose Tools | Templates.
         ciruclo(grphcs);
         fullMarcas(grphcs);
-        /*
-        Thread hiloMinuto = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                movimientoMinutero();
-            }
+
+        Thread hiloMinuto = new Thread(() -> {
+            movimientoMinutero();
         });
-         */ Thread hiloSegundo = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                movimientoSegundero();
-            }
+        Thread hiloSegundo = new Thread(() -> {
+            movimientoSegundero();
         });
-        /*    Thread hiloHora = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                movimientoHora();
-            }
+        Thread hiloHora = new Thread(() -> {
+            movimientoHora();
         });
-         */
-        //  hiloHora.start();
-        // hiloMinuto.start();
+
+        hiloHora.start();
+        hiloMinuto.start();
         hiloSegundo.start();
 
     }
@@ -137,71 +128,55 @@ public class RelojAnalogico extends JFrame {
 
     }
 
-    /*
-    public void movimientoHora() {
+    public void movimientoSegundero() {
         Graphics g = this.getGraphics();
-
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
-        }
-        for (int i = -90; i < 270; i += 6) {
-
+        while (condicionSegundero) {
             try {
-                dibujaMinutero(g, i, Color.BLUE);
-                Thread.sleep(3600);
-                dibujaMinutero(g, i, Color.WHITE);
+                Calendar s = Calendar.getInstance();
+                int seg = s.get(Calendar.SECOND);
+                System.out.println("Valor de seg: " + seg);
+                dibujaSegundero(g, (seg * 6) - 90, Color.RED);
+                Thread.sleep(1000);
+                dibujaSegundero(g, (seg * 6) - 90, Color.WHITE);
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
+
         }
     }
 
     public void movimientoMinutero() {
         Graphics g = this.getGraphics();
-
-        try {
-            Thread.sleep(200);
-        } catch (InterruptedException e) {
-            System.out.println(e.getMessage());
-        }
-        for (int i = -90; i < 270; i += 6) {
-
-            try {
-                dibujaMinutero(g, i, Color.RED);
-                Thread.sleep(600);
-                dibujaMinutero(g, i, Color.WHITE);
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-     */
-    public void movimientoSegundero() {
-        Graphics g = this.getGraphics();
-
         while (condicionSegundero) {
-
             try {
-
-
-                    Calendar s = Calendar.getInstance();
-                    int seg= s.get(Calendar.SECOND);
-                    System.out.println("Valor de seg: " + seg);
-                    dibujaSegundero(g, (seg*6)-90, Color.RED);
-                    Thread.sleep(1000);
-                    dibujaSegundero(g, (seg*6)-90, Color.WHITE);
-
-                
+                Calendar m = Calendar.getInstance();
+                int min = m.get(Calendar.MINUTE);
+                System.out.println("Valor de min: " + min);
+                dibujaMinutero(g, (min * 6) - 90, Color.RED);
+                Thread.sleep(1000);
+                dibujaMinutero(g, (min * 6) - 90, Color.WHITE);
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
-
         }
     }
 
-    /*
+    public void movimientoHora() {
+        Graphics g = this.getGraphics();
+        while (condicionSegundero) {
+            try {
+                Calendar h = Calendar.getInstance();
+                int hour = h.get(Calendar.HOUR);
+                System.out.println("Valor de h: " + hour);
+                dibujaHora(g, (hour * 6) - 90, Color.BLUE);
+                Thread.sleep(1000);
+                dibujaHora(g, (hour * 6) - 90, Color.WHITE);
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
     public void dibujaHora(Graphics g, int angulo, Color color) {
         Point origen = new Point();
         origen.x = 250;
@@ -223,7 +198,7 @@ public class RelojAnalogico extends JFrame {
         g.drawLine(origen.x, origen.y, destino.x, destino.y);
 
     }
-     */
+
     public void dibujaSegundero(Graphics g, int angulo, Color color) {
         Point origen = new Point();
         origen.x = 250;
