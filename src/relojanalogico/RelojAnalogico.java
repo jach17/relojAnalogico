@@ -165,9 +165,10 @@ public class RelojAnalogico extends JFrame {
             try {
                 Calendar h = Calendar.getInstance();
                 int hour = h.get(Calendar.HOUR);
-                dibujaHora(g, (hour * 6) +90, Color.BLACK);
+                dibujaHora(g, (hour * 30)-90 , Color.BLACK);
+                System.out.println(hour);
                 Thread.sleep(1000);
-                dibujaHora(g, (hour * 6) +90, Color.WHITE);
+                dibujaHora(g, (hour * 30)-90 , Color.WHITE);
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
